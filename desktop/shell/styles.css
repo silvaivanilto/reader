@@ -1,0 +1,219 @@
+:root {
+	color-scheme: dark;
+	--bg: #0b1220;
+	--panel: #0f172a;
+	--panel-2: #111c33;
+	--text: #e2e8f0;
+	--muted: #a7b0c2;
+	--border: rgba(148, 163, 184, 0.22);
+	--primary: #2563eb;
+	--primary-hover: #1d4ed8;
+	--chip: #17243f;
+	--chip-active: #1e3a8a;
+	--danger: #ef4444;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background: var(--bg);
+	color: var(--text);
+	font-family: "Segoe UI", "Inter", sans-serif;
+}
+
+body {
+	overflow: hidden;
+}
+
+.topbar {
+	height: 58px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 12px;
+	border-bottom: 1px solid var(--border);
+	background:
+		radial-gradient(circle at top, rgba(37, 99, 235, 0.17), transparent 55%),
+		linear-gradient(180deg, var(--panel-2), var(--panel));
+}
+
+.left-actions,
+.right-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex: 0 0 auto;
+}
+
+.tabs {
+	flex: 1 1 auto;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	overflow-x: auto;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
+.tabs::-webkit-scrollbar {
+	height: 6px;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+	background: rgba(148, 163, 184, 0.4);
+	border-radius: 999px;
+}
+
+button,
+select {
+	height: 36px;
+	border-radius: 10px;
+	border: 1px solid var(--border);
+	background: var(--chip);
+	color: var(--text);
+	padding: 0 12px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+
+button:hover,
+select:hover {
+	border-color: rgba(147, 197, 253, 0.5);
+}
+
+button:active {
+	transform: translateY(1px);
+}
+
+button.primary {
+	background: var(--primary);
+	border-color: transparent;
+}
+
+button.primary:hover {
+	background: var(--primary-hover);
+}
+
+button.ghost {
+	background: rgba(15, 23, 42, 0.45);
+}
+
+.tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 140px;
+	max-width: 300px;
+	height: 36px;
+	padding: 0 10px;
+	background: var(--chip);
+	border: 1px solid var(--border);
+	border-radius: 10px;
+	cursor: pointer;
+	animation: fade-in 180ms ease;
+}
+
+.tab:hover {
+	border-color: rgba(147, 197, 253, 0.45);
+}
+
+.tab.active {
+	background: linear-gradient(180deg, var(--chip-active), #1d3c95);
+	border-color: rgba(147, 197, 253, 0.6);
+	box-shadow: inset 0 0 0 1px rgba(147, 197, 253, 0.18);
+}
+
+.tab-title {
+	flex: 1 1 auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 13px;
+	font-weight: 600;
+	color: #e6eefc;
+}
+
+.tab-close {
+	flex: 0 0 auto;
+	width: 20px;
+	height: 20px;
+	border-radius: 999px;
+	border: 0;
+	padding: 0;
+	background: transparent;
+	color: #dbeafe;
+	font-size: 15px;
+	line-height: 1;
+}
+
+.tab-close:hover {
+	background: rgba(239, 68, 68, 0.25);
+	color: #fecaca;
+}
+
+#content {
+	height: calc(100% - 58px);
+	position: relative;
+}
+
+#hint {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	text-align: center;
+	color: var(--muted);
+	pointer-events: none;
+}
+
+#hint h1 {
+	margin: 0;
+	font-size: 28px;
+	font-weight: 700;
+	color: #dbeafe;
+}
+
+#hint p {
+	margin: 10px 0 0;
+	font-size: 14px;
+}
+
+#drop-overlay {
+	position: fixed;
+	inset: 16px;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	border-radius: 14px;
+	border: 2px dashed rgba(147, 197, 253, 0.9);
+	background: rgba(30, 64, 175, 0.22);
+	backdrop-filter: blur(4px);
+	color: #e0ecff;
+	font-weight: 700;
+	font-size: 20px;
+	z-index: 1000;
+}
+
+#drop-overlay.visible {
+	display: flex;
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Zotero Reader Desktop</title>
+	<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+	<header class="topbar">
+		<div class="left-actions">
+			<button id="new-tab-btn" class="ghost" title="Nova aba (Ctrl+T)">+ Nova aba</button>
+			<button id="open-file-btn" class="primary" title="Abrir arquivo (Ctrl+O)">Abrir arquivo</button>
+		</div>
+		<div id="tabs" class="tabs" aria-label="Abas"></div>
+		<div class="right-actions">
+			<select id="theme-select" title="Tema">
+				<option value="system">Automático</option>
+				<option value="light">Claro</option>
+				<option value="dark">Escuro</option>
+			</select>
+			<button id="default-apps-btn" class="ghost">Definir padrão</button>
+		</div>
+	</header>
+
+	<main id="content">
+		<div id="hint">
+			<h1>Zotero Reader Desktop</h1>
+			<p>Abra um documento ou arraste arquivos para esta janela.</p>
+		</div>
+	</main>
+
+	<div id="drop-overlay">Solte os arquivos para abrir</div>
+
+	<script src="./renderer.js"></script>
+</body>
+</html>

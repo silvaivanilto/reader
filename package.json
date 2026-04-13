@@ -2,15 +2,20 @@
 	"name": "pdf-reader",
 	"version": "2.0.0",
 	"description": "Zotero Reader",
+	"main": "desktop/main.cjs",
 	"scripts": {
 		"build": "npm run build:all",
-		"build:all": "PDFJS_CONFIG=all bash pdfjs/build && webpack",
-		"build:zotero": "PDFJS_CONFIG=zotero bash pdfjs/build && webpack --config-name zotero",
+		"build:all": "node scripts/build-pdfjs.cjs all && webpack",
+		"build:web": "node scripts/build-pdfjs.cjs web && webpack --config-name web",
+		"build:zotero": "node scripts/build-pdfjs.cjs zotero && webpack --config-name zotero",
 		"build:ios": "webpack --config-name ios",
 		"build:android": "webpack --config-name android",
 		"start": "webpack-dev-server --mode development --config-name dev",
 		"view-dev": "webpack-dev-server --mode development --config-name view-dev",
-		"test": "echo \"No tests yet\""
+		"test": "echo \"No tests yet\"",
+		"desktop:run": "electron .",
+		"desktop:start": "npm run build:web && electron .",
+		"desktop:dist": "npm run build:web && electron-builder --win nsis portable --x64 --config.electronDist=node_modules/electron/dist"
 	},
 	"license": "AGPL-3.0",
 	"browserslist": [
@@ -55,6 +60,8 @@
 		"copy-webpack-plugin": "^11.0.0",
 		"css-loader": "^6.7.1",
 		"css-minimizer-webpack-plugin": "^4.0.0",
+		"electron": "^30.5.1",
+		"electron-builder": "^24.13.3",
 		"eslint": "^8.32.0",
 		"eslint-plugin-react": "^7.30.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
@@ -75,5 +82,75 @@
 		"webpack-cli": "^4.10.0",
 		"webpack-dev-middleware": "^5.3.3",
 		"webpack-dev-server": "^4.9.3"
+	},
+	"build": {
+		"appId": "org.zotero.reader.windows",
+		"productName": "Zotero Reader for Windows",
+		"artifactName": "zotero-reader-${version}-${os}-${arch}.${ext}",
+		"directories": {
+			"output": "dist-desktop"
+		},
+		"files": [
+			"desktop/**/*",
+			"build/web/**/*",
+			"COPYING",
+			"package.json"
+		],
+		"asar": true,
+		"win": {
+			"signAndEditExecutable": false,
+			"target": [
+				{
+					"target": "nsis",
+					"arch": [
+						"x64"
+					]
+				},
+				{
+					"target": "portable",
+					"arch": [
+						"x64"
+					]
+				}
+			]
+		},
+		"fileAssociations": [
+			{
+				"ext": "pdf",
+				"name": "PDF document",
+				"description": "PDF document",
+				"role": "Viewer"
+			},
+			{
+				"ext": "epub",
+				"name": "EPUB document",
+				"description": "EPUB document",
+				"role": "Viewer"
+			},
+			{
+				"ext": "html",
+				"name": "HTML document",
+				"description": "HTML document",
+				"role": "Viewer"
+			},
+			{
+				"ext": "htm",
+				"name": "HTML document",
+				"description": "HTML document",
+				"role": "Viewer"
+			}
+		],
+		"nsis": {
+			"artifactName": "zotero-reader-${version}-setup-${arch}.${ext}",
+			"oneClick": false,
+			"allowToChangeInstallationDirectory": true,
+			"perMachine": false
+		},
+		"portable": {
+			"artifactName": "zotero-reader-${version}-portable-${arch}.${ext}"
+		},
+		"extraMetadata": {
+			"main": "desktop/main.cjs"
+		}
 	}
 }
